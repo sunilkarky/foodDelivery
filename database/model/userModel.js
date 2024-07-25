@@ -25,6 +25,9 @@ const userSchema = new schema({
     enum: ["customer", "admin"],
     default: "customer",
   },
+  otp:{
+    type:Number,
+  }
 });
 
 const User = mongoose.model("user", userSchema);
