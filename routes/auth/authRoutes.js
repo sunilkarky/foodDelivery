@@ -17,5 +17,4 @@ router.route("/forgotPassword").post(forgotPassword)
 
 router.route("/verifyOtp").post(verifyOtp)
 router.route("/resetPassword").post(resetPassword)
-
 module.exports = router;

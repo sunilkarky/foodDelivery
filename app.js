@@ -7,6 +7,7 @@ const { registerUser, loginUser } = require("./controller/auth/authController");
 
 //Routes here
 const authRoute = require("./routes/auth/authRoutes");
+const productRoute = require("./routes/product/productRoutes");
 //dotenv for environment variables
 require("dotenv").config();
 
@@ -31,7 +32,9 @@ app.get("/", (req, res) => {
 // app.post("/login", loginUser);
 
 //use auth route imported
-app.use("",authRoute)
+app.use("", authRoute);
+//use product routed
+app.use("", productRoute);
 
 // listen for server
 const PORT = process.env.PORT;

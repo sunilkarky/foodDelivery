@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+const adminSeeding = require("../adminSeeding");
 // connect to database
 exports.connectDatabase = async () => {
   try {
@@ -8,4 +9,7 @@ exports.connectDatabase = async () => {
   } catch (error) {
     console.log("Error in connecting to database" + error);
   }
+d
+  // admin seeding
+  adminSeeding();
 };
