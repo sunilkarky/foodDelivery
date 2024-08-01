@@ -8,6 +8,14 @@ exports.createProduct = async (req, res) => {
     productStockQty,
     productStatus,
   } = req.body;
+  const file = req.file;
+  // console.log(req.file); //form data bata pathane in postman
+
+  if (!file) {
+    return res.status(400).json({
+      message: "Please provide productImage",
+    });
+  }
   if (
     !productName ||
     !productDescription ||
@@ -26,6 +34,7 @@ exports.createProduct = async (req, res) => {
     productPrice: productPrice,
     productStatus: productStatus,
     productStockQty: productStockQty,
+    productImage: "http://localhost:3000/" + file.filename,
   });
   res.status(201).json({
     message: "Product Created successfully",

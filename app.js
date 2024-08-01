@@ -15,6 +15,8 @@ require("dotenv").config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//give file access to view the file eg: uploads folder ko access dine to access images
+app.use(express.static("uploads"))
 //database connection
 connectDatabase();
 

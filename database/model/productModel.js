@@ -24,6 +24,10 @@ const productSchema = new schema({
     type: String,
     enum: ["draft", "public"],
   },
+  productImage :{
+    type : String,
+  
+  }
 },{
     timestamps : true
 });

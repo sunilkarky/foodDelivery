@@ -6,7 +6,6 @@ const { promisify } = require("util");
 const isAuthenticated = async (req, res, next) => {
   //check if user is authenticated (Login)to perform the action
   // login garDako token check
-
   const token = req.headers.authorization; //pass in postman headers token after login
   //   console.log(token);
   if (!token) {

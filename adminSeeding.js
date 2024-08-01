@@ -11,7 +11,7 @@ const adminSeeding = async (req, res) => {
       userEmail: "admin@gmail.com",
       userPassword: bcrypt.hashSync("admin", 10),
       userPhoneNumber: "9811317964",
-      role: "admin",
+      role: "admin", 
     });
     console.log("Admin seeding successful");
   } else {

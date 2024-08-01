@@ -9,7 +9,7 @@ exports.connectDatabase = async () => {
   } catch (error) {
     console.log("Error in connecting to database" + error);
   }
-d
+
   // admin seeding
   adminSeeding();
 };
