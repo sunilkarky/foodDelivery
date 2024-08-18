@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const adminSeeding = require("../adminSeeding");
+const catchAsync = require("../services/catchAsync");
 // connect to database
 exports.connectDatabase = async () => {
   try {
@@ -11,5 +12,5 @@ exports.connectDatabase = async () => {
   }
 
   // admin seeding
-  adminSeeding();
+  catchAsync(adminSeeding());
 };

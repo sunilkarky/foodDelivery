@@ -8,6 +8,9 @@ const { registerUser, loginUser } = require("./controller/auth/authController");
 //Routes here
 const authRoute = require("./routes/auth/authRoutes");
 const productRoute = require("./routes/product/productRoutes");
+const adminUsersRoute = require("./routes/adminUsersRoute/adminUsersRoute");
+const userReviewRoute = require("./routes/userReview/userReviewRoute");
+
 //dotenv for environment variables
 require("dotenv").config();
 
@@ -16,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //give file access to view the file eg: uploads folder ko access dine to access images
-app.use(express.static("uploads"))
+app.use(express.static("uploads"));
 //database connection
 connectDatabase();
 
@@ -37,7 +40,10 @@ app.get("/", (req, res) => {
 app.use("", authRoute);
 //use product routed
 app.use("", productRoute);
-
+//admin user access route
+app.use("", adminUsersRoute);
+//use user review route access
+app.use("", userReviewRoute);
 // listen for server
 const PORT = process.env.PORT;
 app.listen(PORT, () => {

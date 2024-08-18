@@ -1,4 +1,3 @@
-const User = require("../../database/MODEL/USERMODEL.JS");
 const bcrypt = require("bcrypt");
 
 const { model } = require("mongoose");
@@ -6,9 +5,9 @@ const { model } = require("mongoose");
 const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
 const sendEmail = require("../../services/sendEmail");
+const User = require("../../model/userModel");
 
 exports.registerUser = async (req, res) => {
-  console.log(req.body);
   const { name, email, password, phoneNumber } = req.body;
 
   if (!email || !password || !phoneNumber || !name) {
@@ -46,7 +45,11 @@ exports.loginUser = async (req, res) => {
     });
   }
   //check if user with given email exists
-  const userFound = await User.find({ userEmail: email }); //array return
+  console.log("hi");
+  const userFound = await User.find({ userEmail: email }).select(
+    "+userPassword"
+  );
+  //array return
   if (userFound.length == 0) {
     return res.status(400).json({
       message: "User with that email doesn't exist",
@@ -64,7 +67,7 @@ exports.loginUser = async (req, res) => {
     );
     console.log(token);
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Login successful",
       token,
     });
@@ -119,7 +122,7 @@ exports.verifyOtp = async (req, res) => {
     });
   }
   //check if otp matches or not
-  const userExist = await User.find({ userEmail: email });
+  const userExist = await User.find({ userEmail: email }).select("+otp");
   if (userExist.length == 0) {
     return res.status(404).json({
       message: "Email is not registered ",

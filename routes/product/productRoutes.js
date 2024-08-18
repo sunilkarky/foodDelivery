@@ -2,6 +2,8 @@ const {
   createProduct,
   getProducts,
   getSingleProduct,
+  deleteProducts,
+  updateProducts,
 } = require("../../controller/admin/product/productController");
 const checkRoles = require("../../middleware/checkRoles");
 const isAuthenticated = require("../../middleware/isAuthenticated");
@@ -24,6 +26,15 @@ router
 
 //single Product
 
-router.route("/products/:id").get(catchAsync(getSingleProduct));
+router
+  .route("/products/:id")
+  .get(catchAsync(getSingleProduct))
+  .delete(isAuthenticated, checkRoles("admin"), catchAsync(deleteProducts))
+  .patch(
+    isAuthenticated,
+    checkRoles("admin"),
+    upload.single("productImage"),
+    catchAsync(updateProducts)
+  );
 
 module.exports = router;
