@@ -1,6 +1,5 @@
 const Product = require("../../model/productModel");
 const Review = require("../../model/reviewModel");
-const User = require("../../model/userModel");
 
 exports.createReview = async (req, res) => {
   const userId = req.user.id;
@@ -44,6 +43,7 @@ exports.getProductReview = async (req, res) => {
       message: "Product with that id is not found",
     });
   }
+  //first way we get all reviews of all products and reviews with id which is not so systematic
   const reviews = await Review.find({ productId: productId }).populate({
     path: "userId",
     select: "userName userEmail",
@@ -51,7 +51,8 @@ exports.getProductReview = async (req, res) => {
   // .populate({
   //   path: "productId",
   // });
-  // console.log(reviews);
+  //second way is done below in next api
+
   if (reviews.length == 0) {
     return res.status(400).json({
       message: "No any reviews yet",
@@ -62,8 +63,27 @@ exports.getProductReview = async (req, res) => {
     data: reviews,
   });
 };
-//delete reviews
 
+//addReviews of products second array way using schema
+// exports.addProductReview = async (req, res) => {
+//   const productId = req.params.id;
+//   const { rating, message } = req.body;
+//   const userId = req.user.id;
+//   const review = {
+//     userId: userId,
+//     rating,
+//     message,
+//   };
+//   const product = await Product.findById(productId);
+
+//   product.productReview.push(review);
+//   await product.save();
+//   res.json({
+//     message: "success",
+//   });
+// };
+
+//delete reviews
 exports.deleteReview = async (req, res) => {
   const reviewId = req.params.id;
   const userId = req.user.id;
@@ -94,3 +114,33 @@ exports.deleteReview = async (req, res) => {
     data: deletedReview,
   });
 };
+
+//2nd way delete array case
+// exports.deleteReview = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+
+//     // Find the product containing the review
+//     const product = await Product.findOneAndUpdate(
+//       { "productReview._id": id }, //this is condition find if productReview._id contains above id
+//       { $pull: { productReview: { _id: id } } }, //removing
+//       { new: true }
+//     );
+
+//     if (!product) {
+//       return res.status(404).json({
+//         message: "Review not found",
+//       });
+//     }
+
+//     res.status(200).json({
+//       message: "Review deleted successfully",
+//       product,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       message: "An error occurred while deleting the review",
+//       error: error.message,
+//     });
+//   }
+// };

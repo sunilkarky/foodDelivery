@@ -1,7 +1,7 @@
 const {
   getProductReview,
-  createReview,
   deleteReview,
+  createReview,
 } = require("../../controller/user/userController");
 
 const isAuthenticated = require("../../middleware/isAuthenticated");
@@ -13,6 +13,6 @@ const router = require("express").Router();
 router
   .route("/review/:id")
   .get(isAuthenticated, catchAsync(getProductReview))
-  .post(isAuthenticated, catchAsync(createReview))
+  .post(isAuthenticated, catchAsync(createReview)) //for nextway review .post(isAuthenticated, catchAsync(addProductReview))
   .delete(isAuthenticated, catchAsync(deleteReview));
 module.exports = router;

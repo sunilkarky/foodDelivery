@@ -43,6 +43,13 @@ exports.createProduct = async (req, res) => {
   });
 };
 exports.getProducts = async (req, res) => {
+  // const products = await Product.find().populate({
+  //   path: "productReview",
+  //   populate: {
+  //     path: "userId",
+  //     select: "userName userEmail",
+  //   },
+  // });
   const products = await Product.find();
   if (products.length == 0) {
     return res.status(400).json({
